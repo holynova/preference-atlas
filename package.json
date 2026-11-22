@@ -1,0 +1,8 @@
+{
+  "name": "preference-atlas",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node --check dist/app.js && node --check dist/writing.js && node --check dist/visual.js && node --check dist/art.js"
+  }
+}
