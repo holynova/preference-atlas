@@ -1,0 +1,646 @@
+/* Print specimens share registration marks, paper edges and solid spot colours. */
+.sa-cover,
+.sa-hero-art {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  overflow: hidden;
+  container-type: inline-size;
+  pointer-events: none;
+  user-select: none;
+  color: #20201e;
+  line-height: 1;
+}
+.sa-cover {
+  width: 100%;
+  height: 145px;
+}
+.sa-cover *,
+.sa-hero-art * {
+  box-sizing: border-box;
+}
+.sa-cover i,
+.sa-hero-art i {
+  display: block;
+  font-style: normal;
+}
+.sa-cover::after,
+.sa-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/png;base64,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");
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+}
+.sa-crop {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  z-index: 2;
+  color: inherit;
+}
+.sa-crop::before,
+.sa-crop::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+.sa-crop::before {
+  height: 1px;
+  width: 100%;
+  top: 4px;
+  left: 0;
+}
+.sa-crop::after {
+  width: 1px;
+  height: 100%;
+  top: 0;
+  left: 4px;
+}
+.sa-crop-tl {
+  top: 7%;
+  left: 5%;
+}
+.sa-crop-br {
+  bottom: 7%;
+  right: 5%;
+}
+.sa-proof-ticks {
+  width: 47px;
+  height: 5px;
+  background: repeating-linear-gradient(
+    90deg,
+    currentColor 0 1px,
+    transparent 1px 3px
+  );
+  opacity: 0.8;
+}
+.sa-ink-strip {
+  position: absolute;
+  width: 37px;
+  height: 7px;
+  right: 6%;
+  bottom: 11%;
+  background: linear-gradient(
+    90deg,
+    #252421 0 25%,
+    #635644 25% 50%,
+    #a68c64 50% 75%,
+    #f8e9cb 75%
+  );
+}
+.sa-lines {
+  display: grid !important;
+  gap: 4px;
+}
+.sa-lines b {
+  height: 2px;
+  background: currentColor;
+  display: block;
+}
+.sa-lines b:nth-child(2) {
+  width: 92%;
+}
+.sa-lines b:last-child {
+  width: 64%;
+}
+/* Sentence. The marks frame a large piece of metal type. */
+.sa-art-sentence {
+  background: #eac7ae;
+}
+.sa-sen-grid {
+  position: absolute;
+  inset: 12% 7%;
+  border-block: 1px solid #20201e44;
+  background: linear-gradient(
+    90deg,
+    transparent calc(50% - 0.5px),
+    #20201e2e 50%,
+    transparent calc(50% + 0.5px)
+  );
+}
+.sa-sen-word,
+.sa-sen-open,
+.sa-sen-close {
+  position: absolute;
+  color: #282526;
+}
+.sa-sen-word {
+  font:
+    900 clamp(68px, 30cqw, 142px) / 1 "Songti SC",
+    "STSong",
+    "Noto Serif CJK SC",
+    "SimSun",
+    serif;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -53%);
+}
+.sa-sen-open,
+.sa-sen-close {
+  font:
+    700 clamp(90px, 45cqw, 186px) / 1 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.12em;
+}
+.sa-sen-open {
+  left: 11%;
+  top: 5%;
+  color: #b44427;
+}
+.sa-sen-close {
+  right: 14%;
+  bottom: -44%;
+  color: #b44427;
+}
+/* Paragraph. A proofreading slip cuts across the paragraph mark. */
+.sa-art-paragraph {
+  background: #b5a9d0;
+}
+.sa-par-mark {
+  position: absolute;
+  top: 47%;
+  left: 7%;
+  transform: translateY(-54%) rotate(-7deg);
+  font:
+    700 clamp(130px, 51cqw, 228px) / 1 Georgia,
+    serif;
+  color: #382343;
+}
+.sa-par-sheet {
+  position: absolute;
+  left: 46%;
+  top: 9%;
+  width: 44%;
+  height: 116%;
+  padding: 7% 5%;
+  background: #e9dfd1;
+  transform: rotate(11deg);
+  box-shadow: 4px 5px 0 #35283f;
+  outline: 1px solid #332c35;
+}
+.sa-par-sheet .sa-lines {
+  color: #312735;
+}
+.sa-par-sheet .sa-lines + .sa-lines {
+  margin-top: 12%;
+}
+.sa-par-stroke {
+  position: absolute;
+  top: 42%;
+  left: 8%;
+  height: 20%;
+  width: 78%;
+  border: 2px solid #b74837;
+  border-radius: 60%;
+  transform: rotate(-8deg);
+}
+.sa-art-paragraph > .sa-proof-ticks {
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  color: #392e43;
+}
+/* Article. An open, printed double-page spread. */
+.sa-art-article {
+  background: #9ebead;
+}
+.sa-book {
+  position: absolute;
+  left: 50%;
+  top: 53%;
+  width: 63%;
+  height: 85%;
+  transform: translate(-50%, -50%) rotate(-10deg);
+  filter: drop-shadow(3px 4px 0 #3f5949);
+}
+.sa-leaf {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background: #f5eed7;
+  color: #283729;
+  border: 1px solid currentColor;
+  padding: 6% 5%;
+}
+.sa-leaf-l {
+  left: 0;
+  transform: skewY(5deg);
+  transform-origin: right top;
+  background: linear-gradient(90deg, #f6edd6 90%, #d3c9ae);
+}
+.sa-leaf-r {
+  right: 0;
+  transform: skewY(-5deg);
+  transform-origin: left top;
+  background: linear-gradient(90deg, #cfc5aa, #f5ecd4 12%);
+}
+.sa-leaf-title {
+  width: 90%;
+  height: 18%;
+  margin: 0 0 17%;
+  border-block: 4px solid currentColor;
+}
+.sa-leaf-figure {
+  width: 100%;
+  height: 46%;
+  margin-bottom: 14%;
+  background: repeating-linear-gradient(
+    135deg,
+    #425949 0 1px,
+    transparent 1px 4px
+  );
+}
+.sa-leaf .sa-lines {
+  gap: 4px;
+}
+.sa-leaf .sa-lines b {
+  height: 1px;
+}
+/* Headline. Condensed display type oversized across a dark printing plate. */
+.sa-art-headline {
+  background: #304797;
+  color: #edeacb;
+}
+.sa-head-rule {
+  position: absolute;
+  inset: 12% 6%;
+  border-block: 3px double #edeacb9e;
+}
+.sa-head-word {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%) skewX(-8deg) scaleX(1.08);
+  font:
+    1000 clamp(72px, 30cqw, 138px) / 1 "PingFang SC",
+    "Microsoft Yahei",
+    sans-serif;
+  white-space: nowrap;
+  letter-spacing: -0.11em;
+  color: #f0ebcc;
+  text-shadow:
+    3px 3px 0 #304797,
+    4px 4px 0 #a6afda;
+}
+.sa-head-seal {
+  position: absolute;
+  right: 9%;
+  top: 14%;
+  width: 7%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f87746;
+}
+.sa-art-headline > .sa-proof-ticks {
+  position: absolute;
+  left: 8%;
+  bottom: 5%;
+}
+/* Interface. Two offset screen proofs, with a graphic in the foreground. */
+.sa-art-ui {
+  background-color: #b4cce1;
+  background-image: radial-gradient(#788997 0.6px, transparent 0.9px);
+  background-size: 7px 7px;
+}
+.sa-window {
+  position: absolute;
+  width: 53%;
+  height: 68%;
+  border: 2px solid #232d34;
+  background: #efebda;
+  box-shadow: 4px 4px 0 #283742;
+}
+.sa-window-back {
+  left: 18%;
+  top: 13%;
+  transform: rotate(-8deg);
+  background: #7f9cb5;
+}
+.sa-window-back > i {
+  margin: 7% auto;
+  width: 84%;
+  height: 12%;
+  border-block: 1px solid #283742;
+}
+.sa-window-front {
+  left: 30%;
+  top: 22%;
+  transform: rotate(5deg);
+}
+.sa-window-top {
+  height: 21%;
+  border-bottom: 1.5px solid #24303a;
+  display: flex !important;
+  align-items: center;
+  gap: 4px;
+  padding-left: 6%;
+}
+.sa-window-top > b {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #283742;
+}
+.sa-window-grid {
+  height: 79%;
+  display: grid !important;
+  grid-template-columns: 42% 1fr;
+  gap: 8%;
+  align-items: center;
+  padding: 6%;
+}
+.sa-window-image {
+  height: 100%;
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      #f1b66b 0 28%,
+      #253240 29% 31%,
+      transparent 32%
+    ),
+    #839fbc;
+}
+.sa-window-row .sa-lines {
+  gap: 4px;
+}
+.sa-window-row .sa-lines b {
+  height: 2px;
+}
+.sa-window-row .sa-lines b:nth-child(n + 4) {
+  display: none;
+}
+.sa-window-row > b {
+  display: block;
+  width: 54%;
+  height: 6px;
+  background: #344a62;
+  margin-top: 12%;
+}
+/* Design. Four inverse sets of elliptical rings meet at the centre. */
+.sa-art-design {
+  background: #ee7454;
+}
+.sa-flower {
+  position: absolute;
+  width: 67%;
+  aspect-ratio: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-10deg);
+}
+.sa-flower > i {
+  position: absolute;
+  inset: 0;
+  transform: rotate(calc(var(--petal) * 90deg));
+}
+.sa-flower > i::before {
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 36%;
+  width: 28%;
+  height: 48%;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    ellipse at 50% 96%,
+    #232222 0 2px,
+    #ee7454 3px 6px
+  );
+}
+.sa-design-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: #232222;
+}
+/* Colour. A printed colour wheel and an offset four-chip mixing strip. */
+.sa-art-color {
+  background: #e8dbc8;
+}
+.sa-wheel {
+  position: absolute;
+  left: 12%;
+  top: 45%;
+  width: 55%;
+  aspect-ratio: 1;
+  transform: translateY(-50%) rotate(-14deg);
+  border-radius: 50%;
+  background: conic-gradient(
+    #c2493c 0 30deg,
+    #e56c39 30deg 60deg,
+    #f1a644 60deg 90deg,
+    #d9c860 90deg 120deg,
+    #8aaf70 120deg 150deg,
+    #507e6e 150deg 180deg,
+    #406b80 180deg 210deg,
+    #495c92 210deg 240deg,
+    #70649b 240deg 270deg,
+    #995f91 270deg 300deg,
+    #bc6a82 300deg 330deg,
+    #ce5f63 330deg
+  );
+}
+.sa-wheel::after {
+  content: "";
+  position: absolute;
+  inset: 37%;
+  border-radius: 50%;
+  background: #e8dbc8;
+}
+.sa-chips {
+  position: absolute;
+  left: 54%;
+  top: 14%;
+  height: 83%;
+  width: 19%;
+  display: grid !important;
+  padding: 5px;
+  background: #fff6dd;
+  border: 1px solid #3d3b34;
+  box-shadow: 3px 4px 0 #4b453b;
+  transform: rotate(14deg);
+}
+.sa-chips b {
+  background: var(--chip);
+}
+/* Chart. A single visible scale groups the halftone bars into a series. */
+.sa-art-chart {
+  background: #263f42;
+}
+.sa-chart-frame {
+  position: absolute;
+  inset: 17% 12% 16%;
+  border-left: 1px solid #a5c1ad87;
+  border-bottom: 1px solid #d6ddad;
+  background: repeating-linear-gradient(
+    to top,
+    transparent 0 calc(25% - 1px),
+    #abc9b158 25%
+  );
+}
+.sa-chart-bars {
+  position: absolute;
+  inset: 0 4% 0 6%;
+  display: flex !important;
+  gap: 5%;
+  align-items: flex-end;
+}
+.sa-chart-bars > b {
+  flex: 1;
+  display: block;
+  background: #dbe984;
+}
+.sa-chart-bars > b:nth-child(2n) {
+  background: repeating-linear-gradient(135deg, #9dbb84 0 1px, #324b47 2px 4px);
+  border: 1px solid #afc79c;
+}
+.sa-chart-key {
+  position: absolute;
+  top: 8%;
+  right: 12%;
+  height: 3px;
+  width: 10%;
+  background: linear-gradient(
+    90deg,
+    #dbe984 0 26%,
+    transparent 26% 37%,
+    #86a694 37% 100%
+  );
+}
+/* Hero. Three physical print cards on the parent's dark drafting grid. */
+.sa-hero-art {
+  width: 100%;
+  height: 250px;
+  overflow: visible;
+}
+.sa-hero-stack {
+  position: absolute;
+  width: min(100%, 440px);
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.sa-card {
+  position: absolute;
+  aspect-ratio: 0.77;
+  width: 35%;
+  top: 50%;
+  color: #242420;
+  border: 1px solid #1d1d1b;
+  box-shadow: 3px 6px 0 #0007;
+  overflow: hidden;
+}
+.sa-card-letter {
+  left: 6%;
+  background: #ebe6d8;
+  transform: translateY(-54%) rotate(-17deg);
+}
+.sa-letter-spec {
+  position: absolute;
+  left: 5%;
+  top: 25%;
+  font:
+    italic 700 clamp(40px, 19cqw, 96px) / 1 Georgia,
+    serif;
+  letter-spacing: -0.13em;
+}
+.sa-card-letter::before {
+  content: "";
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  top: 61%;
+  height: 1px;
+  background: #635f55;
+  box-shadow: 0 -36px 0 #635f554d;
+}
+.sa-card-letter > .sa-proof-ticks {
+  position: absolute;
+  left: 8%;
+  bottom: 9%;
+}
+.sa-card-wave {
+  left: 31%;
+  background: #f56c49;
+  transform: translateY(-55%) rotate(-4deg);
+}
+.sa-wave {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 16%;
+  bottom: 19%;
+  background: repeating-radial-gradient(
+    ellipse at 0% 103%,
+    #262421 0 2.1px,
+    transparent 2.7px 6.8px
+  );
+}
+.sa-wave-key {
+  position: absolute;
+  bottom: 9%;
+  left: 9%;
+  width: 26%;
+  height: 4px;
+  background: #272421;
+}
+.sa-card-sun {
+  left: 55%;
+  background: #d5e977;
+  transform: translateY(-44%) rotate(13deg);
+}
+.sa-sun {
+  position: absolute;
+  left: 7%;
+  width: 86%;
+  aspect-ratio: 1;
+  top: 42%;
+  transform: translateY(-50%);
+}
+.sa-sun > b {
+  position: absolute;
+  left: 46%;
+  top: 6%;
+  width: 8%;
+  height: 44%;
+  display: block;
+  transform-origin: 50% 100%;
+  transform: rotate(calc(var(--ray) * 30deg));
+  background: #24251f;
+}
+.sa-sun::after {
+  content: "";
+  position: absolute;
+  inset: 39%;
+  background: #d5e977;
+  border-radius: 50%;
+  border: 1px solid #24251f;
+}
+.sa-sun-footer {
+  position: absolute;
+  bottom: 8%;
+  left: 8%;
+  right: 8%;
+  padding-top: 4%;
+  border-top: 1px solid #3b4328;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sa-sun-footer > i:first-child {
+  width: 7px;
+  height: 7px;
+  outline: 1px solid #282a21;
+  border-radius: 50%;
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f5ef" />
+    <meta
+      name="description"
+      content="比较中文写作、界面、视觉设计与配色的真实样本，给偏好打分，生成可以复制给 AI 的个人风格指南。"
+    />
+    <title>风格样本室 · 个人风格指南</title>
+    <link rel="icon" href="mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="art.css" />
+    <link rel="stylesheet" href="visual.css" />
+    <script defer src="art.js"></script>
+    <script defer src="writing.js"></script>
+    <script defer src="visual.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#view">跳到主要内容</a>
+    <header class="top">
+      <div class="bar wrap">
+        <a class="wordmark" href="#catalog" aria-label="风格样本室首页"
+          ><img src="mark.svg" alt="" />风格样本室</a
+        >
+        <nav aria-label="主导航">
+          <a href="#catalog" id="nav-catalog">样本目录</a
+          ><a href="#guides" id="nav-guides"
+            ><span class="book-icon" aria-hidden="true"></span>我的指南<span
+              id="guide-count"
+            ></span
+          ></a>
+        </nav>
+      </div>
+    </header>
+    <main id="view" class="wrap" tabindex="-1"></main>
+    <footer class="wrap">
+      <span>风格样本室</span><span id="storage-label">评分保存在当前浏览器</span
+      ><button id="method" type="button">方法来源</button>
+    </footer>
+    <dialog id="about">
+      <button class="dialog-close" aria-label="关闭">×</button>
+      <h2>从样本认识偏好</h2>
+      <p>
+        Matt Pocock 提议让人给示例打分，再让 AI
+        根据反馈逐步了解写作风格。这里把这个方法扩展到中文写作与视觉设计。
+      </p>
+      <p>
+        每组围绕同一任务改变一种主要做法。你可以喜欢两个版本，也可以都给低分。指南会保留分数、例子和适用场景，方便你继续和
+        AI 校准。
+      </p>
+      <a
+        href="https://x.com/mattpocockuk/status/2124214098984370645"
+        target="_blank"
+        rel="noopener noreferrer"
+        >阅读原帖 ↗</a
+      >
+    </dialog>
+    <div id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

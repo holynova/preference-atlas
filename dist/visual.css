@@ -1,0 +1,547 @@
+.vx {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  isolation: isolate;
+  overflow: hidden;
+  text-align: left;
+  font:
+    400 15px/1.4 -apple-system,
+    BlinkMacSystemFont,
+    "PingFang SC",
+    "Microsoft YaHei",
+    sans-serif;
+  color: #172633;
+}
+.vx *,
+.vx *::before,
+.vx *::after {
+  box-sizing: border-box;
+}
+.vx-ui {
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  min-height: 230px;
+  background: #e7ebea;
+}
+.vx-ui-base {
+  position: relative;
+  width: 100%;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  color: #20342e;
+  background: #fff;
+  border-radius: 9px;
+}
+.vx .vx-meta,
+.vx .vx-detail,
+.vx .vx-status {
+  font-size: 13px;
+  color: #465f56;
+}
+.vx .vx-name {
+  color: #153b2e;
+  font-size: 23px;
+  line-height: 1.2;
+  font-weight: 750;
+}
+.vx .vx-action {
+  display: inline-block;
+  padding: 6px 13px;
+  margin-top: 4px;
+  color: white;
+  background: #2a604c;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 650;
+}
+.vx-ticket {
+  position: absolute;
+  right: 16px;
+  top: 40px;
+  width: 37px;
+  height: 39px;
+  background: #dcebc7;
+  color: #2c6342;
+  text-align: center;
+  font:
+    33px/39px Georgia,
+    serif;
+  transform: rotate(9deg);
+}
+.vx-image-first {
+  overflow: hidden;
+}
+.vx-motif {
+  margin: -18px -18px 3px;
+  width: calc(100% + 36px);
+  height: 48px;
+  overflow: hidden;
+  padding-left: 8px;
+  background: #dcebc7;
+  color: #387147;
+  font:
+    52px/0.95 Georgia,
+    serif;
+  white-space: nowrap;
+  letter-spacing: -4px;
+}
+.vx-slots {
+  display: grid;
+  width: 100%;
+  gap: 0;
+  font-size: 13px;
+}
+.vx-slots > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 5px;
+}
+.vx-rows > div {
+  padding: 9px 0;
+  border-bottom: 1px solid #cbd8d1;
+}
+.vx-cards {
+  gap: 5px;
+}
+.vx-cards > div {
+  border-radius: 5px;
+  background: #edf2ea;
+  padding: 8px 9px;
+}
+.vx-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  font-size: 13px;
+}
+.vx-pills > * {
+  padding: 4px 10px;
+  background: #eaf0eb;
+  border-radius: 20px;
+}
+.vx-pills b {
+  background: #28543d;
+  color: #fff;
+}
+.vx-tabs {
+  border-bottom: 1px solid #d3dcd6;
+}
+.vx-tabs > * {
+  padding: 4px 6px;
+}
+.vx-tabs b {
+  border-bottom: 3px solid #28543d;
+}
+.vx-event {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 8px;
+}
+.vx-event i {
+  padding: 9px;
+  font:
+    20px/1 Georgia,
+    serif;
+  background: #ebefe5;
+}
+.vx-event b,
+.vx-event small {
+  display: block;
+}
+.vx-event small {
+  color: #52655a;
+  font-size: 12px;
+}
+.vx-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 14px;
+}
+.vx-actions > * {
+  flex: 1;
+  padding: 7px 2px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+.vx-primary > b {
+  color: #fff;
+  background: #2a604c;
+}
+.vx-equal > * {
+  border: 1px solid #56715f;
+}
+.vx-outline {
+  border: 1px solid #7c8b83;
+}
+.vx-elevated {
+  box-shadow: 0 7px 17px #21362c38;
+}
+.vx-progress {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  margin: 9px 0 3px;
+  gap: 4px;
+  height: 9px;
+}
+.vx-progress i {
+  flex: 1;
+  background: #417859;
+  border-radius: 2px;
+}
+.vx-segments i:nth-child(n + 3),
+.vx-continuous {
+  background: #dce6dc;
+}
+.vx-continuous {
+  border-radius: 6px;
+}
+.vx-continuous i {
+  flex: 0 0 50%;
+  border-radius: 6px;
+}
+.vx-sheet {
+  position: relative;
+  min-height: 214px;
+  overflow: hidden;
+  color: #242632;
+  background: #d2ddee;
+}
+.vx-poster-words {
+  position: absolute;
+  z-index: 1;
+  inset: auto 16px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.vx-poster-words b {
+  font:
+    850 clamp(27px, 3.15vw, 46px) / 1.18 "PingFang SC",
+    "Microsoft YaHei",
+    sans-serif;
+  letter-spacing: -0.04em;
+}
+.vx-poster-words small {
+  font:
+    600 12px/1.3 "Courier New",
+    monospace;
+  letter-spacing: 0.1em;
+}
+.vx-poster-words span {
+  font-size: 13px;
+  font-weight: 600;
+}
+.vx-pic {
+  position: absolute;
+  color: #3e5690;
+}
+.vx-center .vx-pic,
+.vx-offset .vx-pic {
+  width: 105px;
+  height: 75px;
+}
+.vx-center .vx-pic {
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.vx-center .vx-poster-words {
+  align-items: center;
+}
+.vx-offset .vx-pic {
+  right: 17px;
+  top: 17px;
+}
+.vx-center .vx-pic i,
+.vx-offset .vx-pic i {
+  position: absolute;
+  inset: 0;
+  border: 2px solid;
+  border-radius: 50%;
+}
+.vx-center .vx-pic i:nth-child(2),
+.vx-offset .vx-pic i:nth-child(2) {
+  inset: 8px 11px;
+}
+.vx-center .vx-pic i:nth-child(3),
+.vx-offset .vx-pic i:nth-child(3) {
+  inset: 16px 22px;
+}
+.vx-center .vx-pic i:nth-child(4),
+.vx-offset .vx-pic i:nth-child(4) {
+  inset: 24px 33px;
+}
+.vx-serif,
+.vx-sans {
+  color: #52282d;
+  background: #efe1cb;
+}
+.vx-serif .vx-pic,
+.vx-sans .vx-pic {
+  inset: 17px;
+  border: 1px solid #8b6159;
+}
+.vx-serif .vx-pic::after,
+.vx-sans .vx-pic::after {
+  content: "";
+  position: absolute;
+  right: 11px;
+  top: 10px;
+  width: 31px;
+  height: 38px;
+  outline: 1px dashed #8b6159;
+  background: repeating-linear-gradient(
+    -35deg,
+    transparent 0 3px,
+    #b8a18b 3px 4px
+  );
+}
+.vx-serif .vx-poster-words,
+.vx-sans .vx-poster-words {
+  inset: auto 27px 28px;
+  gap: 5px;
+}
+.vx-serif .vx-poster-words b {
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+  font-weight: 400;
+  letter-spacing: 0.09em;
+}
+.vx-sans .vx-poster-words b {
+  font-weight: 900;
+  letter-spacing: -0.09em;
+}
+.vx-contour,
+.vx-solid {
+  background: #1e3835;
+  color: #d2e6ad;
+}
+.vx-contour .vx-pic,
+.vx-solid .vx-pic {
+  top: 12px;
+  right: 13px;
+  display: grid;
+  grid-template-columns: repeat(2, 41px);
+  gap: 2px;
+  transform: rotate(-10deg);
+  color: #b0dca1;
+}
+.vx-contour .vx-pic i,
+.vx-solid .vx-pic i {
+  display: block;
+  width: 41px;
+  height: 39px;
+  border-radius: 0 90%;
+  border: 2px solid;
+}
+.vx-solid .vx-pic i {
+  background: currentColor;
+}
+.vx-contour .vx-pic i:nth-child(2n),
+.vx-solid .vx-pic i:nth-child(2n) {
+  transform: scaleX(-1);
+}
+.vx-quiet,
+.vx-bleed {
+  color: #f9ecd1;
+  background: #394c6b;
+}
+.vx-quiet .vx-pic,
+.vx-bleed .vx-pic {
+  border-radius: 50%;
+  background: #ead7a6;
+}
+.vx-quiet .vx-pic {
+  top: 22px;
+  right: 25px;
+  width: 41px;
+  height: 41px;
+}
+.vx-bleed .vx-pic {
+  top: -145px;
+  right: -31px;
+  width: 260px;
+  height: 260px;
+}
+.vx-flat,
+.vx-grain {
+  background: #f7ab6c;
+  color: #452d29;
+}
+.vx-flat .vx-pic,
+.vx-grain .vx-pic {
+  width: 75px;
+  height: 70px;
+  top: 18px;
+  right: 17px;
+  background: #452d29;
+  border-radius: 48% 52% 36% 57%;
+  transform: rotate(-16deg);
+}
+.vx-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.3;
+  pointer-events: none;
+  background-image:
+    radial-gradient(#422b20 0.6px, transparent 1px),
+    radial-gradient(#fff1cd 0.8px, transparent 1px);
+  background-position:
+    0 0,
+    1px 2px;
+  background-size:
+    3px 5px,
+    5px 4px;
+}
+.vx-horizontal,
+.vx-vertical {
+  background: #e4e2d8;
+  color: #2d3437;
+}
+.vx-horizontal .vx-pic,
+.vx-vertical .vx-pic {
+  inset: 0 0 0 auto;
+  width: 29%;
+  background: repeating-linear-gradient(
+    90deg,
+    #a3a699 0 1px,
+    transparent 1px 11px
+  );
+}
+.vx-vertical .vx-poster-words b {
+  height: 2.1em;
+  writing-mode: vertical-rl;
+}
+.vx-palette {
+  background: white;
+}
+.vx-color-card {
+  min-height: 160px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  isolation: isolate;
+  padding: 17px;
+  position: relative;
+  overflow: hidden;
+  background: var(--vb);
+  color: var(--vi);
+}
+.vx-color-card > div {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: var(--vb);
+  padding: 4px 8px 2px 0;
+}
+.vx-color-card b {
+  font:
+    800 29px/1.23 "PingFang SC",
+    "Microsoft YaHei",
+    sans-serif;
+  letter-spacing: -0.04em;
+}
+.vx-color-card small {
+  font:
+    700 12px/1.5 "Courier New",
+    monospace;
+}
+.vx-color-card span {
+  font-size: 13px;
+}
+.vx-color-card i {
+  position: absolute;
+  width: 126px;
+  height: 126px;
+  right: -9px;
+  top: -7px;
+  border-radius: 50%;
+  background: var(--va);
+}
+.vx-color-card i::after {
+  content: "";
+  width: 90px;
+  height: 72px;
+  position: absolute;
+  right: 0;
+  bottom: -23px;
+  border-radius: 80% 0 0 0;
+  background: var(--vs);
+}
+.vx-swatches {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  padding: 8px;
+}
+.vx-swatches span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: #34404a;
+  font:
+    600 11px/1.4 ui-monospace,
+    monospace;
+}
+.vx-swatches i {
+  width: 100%;
+  height: 11px;
+  background: currentColor;
+  box-shadow: inset 0 0 0 1px #0002;
+}
+.vx-chart {
+  padding: 11px;
+  background: #e8e8e3;
+}
+.vx-chart-paper {
+  padding: 11px 10px;
+  background: #fcfcf8;
+  color: #273948;
+}
+.vx-chart-paper b,
+.vx-chart-paper small {
+  display: block;
+}
+.vx-chart-paper b {
+  font-size: 18px;
+}
+.vx-chart-paper small {
+  font-size: 12px;
+  margin: 1px 0 9px;
+}
+.vx-chart-paper svg {
+  width: 100%;
+  height: auto;
+  max-height: 180px;
+  display: block;
+}
+.vx-chart-paper svg text {
+  fill: #263b4c;
+  font:
+    12px -apple-system,
+    "PingFang SC",
+    "Microsoft YaHei",
+    sans-serif;
+}
+.vx-grid-line {
+  stroke: #b6c2c4;
+  fill: none;
+  stroke-width: 1;
+}
