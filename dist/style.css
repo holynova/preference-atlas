@@ -517,78 +517,34 @@ footer button {
   padding: 14px;
   background: #eeefe8;
 }
-.ratings {
-  border: 0;
-  border-top: 1px solid var(--line);
-  margin: 0;
-  padding: 13px 17px 16px;
-  min-width: 0;
+.choice-panel {
+  margin-top: 16px;
 }
-.ratings legend {
-  float: left;
-  width: 100%;
-  font-size: 0.9rem;
-  margin: 0 0 8px;
-  font-weight: 650;
-}
-.scale {
+.choice-grid {
   display: grid;
-  clear: both;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
 }
-.scale label {
-  position: relative;
-  cursor: pointer;
+.choice-grid button {
+  min-height: 44px;
 }
-.scale input {
-  position: absolute;
-  opacity: 0;
-  width: 1px;
-  height: 1px;
-}
-.scale span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 6px 2px;
-  border: 1px solid #d2d4c7;
-  border-radius: 5px;
-  background: #fafbf5;
-  min-height: 46px;
-}
-.scale b {
-  font: 600 1rem var(--mono);
-}
-.scale small {
-  font-size: 0.8rem;
-}
-.scale input:checked + span {
+.choice-grid button[aria-pressed="true"] {
   background: var(--acid);
-  border-color: #626a3c;
-  box-shadow: inset 0 0 0 1px #626a3c;
+  color: var(--ink);
+  border-color: var(--ink);
 }
-.scale input:focus-visible + span {
-  outline: 3px solid #4572d0;
-  outline-offset: 1px;
-}
-.scale label:hover span {
-  border-color: #788065;
+.prior,
+.note summary {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-block: 8px;
 }
 .note {
-  display: block;
-  margin: 18px 0;
+  margin-top: 14px;
 }
-.note span {
-  display: block;
-  font-size: 0.95rem;
-  font-weight: 650;
-  margin-bottom: 6px;
-}
-.note small {
-  font-weight: 400;
-  color: var(--muted);
+.note summary {
+  cursor: pointer;
+  width: fit-content;
 }
 .note input {
   width: 100%;
@@ -597,15 +553,13 @@ footer button {
   border: 1px solid var(--line);
   border-radius: 6px;
 }
-.advance,
+.rule b {
+  max-width: 10em;
+}
 .action-inline {
   display: flex;
   align-items: center;
   gap: 12px;
-}
-.advance span {
-  font-size: 0.88rem;
-  color: var(--muted);
 }
 .guide-toolbar {
   margin: 24px 0 18px;
@@ -923,9 +877,6 @@ dialog::backdrop {
   .written {
     min-height: 142px;
   }
-  .ratings {
-    padding: 10px 13px 13px;
-  }
   .sample-head {
     padding: 9px 13px;
   }
@@ -934,12 +885,6 @@ dialog::backdrop {
   }
   .step-actions {
     gap: 8px;
-  }
-  .advance {
-    gap: 6px;
-  }
-  .advance span {
-    font-size: 0.77rem;
   }
   .step-actions a,
   .step-actions button {

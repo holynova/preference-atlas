@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#f6f5ef" />
     <meta
       name="description"
-      content="比较中文写作、界面、视觉设计与配色的真实样本，给偏好打分，生成可以复制给 AI 的个人风格指南。"
+      content="比较中文写作、界面、视觉设计与配色的真实样本，选出更喜欢的版本，生成可以复制给 AI 的个人风格指南。"
     />
     <title>风格样本室 · 个人风格指南</title>
     <link rel="icon" href="mark.svg" type="image/svg+xml" />
@@ -38,21 +38,19 @@
     </header>
     <main id="view" class="wrap" tabindex="-1"></main>
     <footer class="wrap">
-      <span>风格样本室 v1.0.0</span>
+      <span>风格样本室 v1.0.1</span>
       <a href="https://github.com/holynova/preference-atlas" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <span id="storage-label">评分保存在当前浏览器</span
+      <span id="storage-label">选择保存在当前浏览器</span
       ><button id="method" type="button">方法来源</button>
     </footer>
     <dialog id="about">
       <button class="dialog-close" aria-label="关闭">×</button>
       <h2>从样本认识偏好</h2>
       <p>
-        Matt Pocock 提议让人给示例打分，再让 AI
-        根据反馈逐步了解写作风格。这里把这个方法扩展到中文写作与视觉设计。
+        Matt Pocock 提出两种收集偏好的方式：给单个句子打 1–4 分，或从多个版本中选出更喜欢的一个。一起规划文章后，AI 可以逐句给出样例，检验它对你风格的猜测。
       </p>
       <p>
-        每组围绕同一任务改变一种主要做法。你可以喜欢两个版本，也可以都给低分。指南会保留分数、例子和适用场景，方便你继续和
-        AI 校准。
+        样本室使用预先写好的对照。每组点一次即可继续，完成任意一组就能复制指南给自己的 AI。
       </p>
       <a
         href="https://x.com/mattpocockuk/status/2124214098984370645"

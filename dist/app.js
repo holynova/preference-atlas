@@ -58,7 +58,12 @@ const topics = [
   },
 ];
 const pairs = { ...window.writingTopics, ...window.visualTopics };
-const labels = ["很不喜欢", "不太喜欢", "比较喜欢", "很喜欢"];
+const choices = {
+  a: "更喜欢 A",
+  b: "更喜欢 B",
+  both: "都喜欢",
+  neither: "都不喜欢",
+};
 const key = "fengge-samples-v1";
 const view = document.getElementById("view");
 let transient = false;
@@ -89,7 +94,7 @@ function response(id, i) {
 }
 function complete(id, i) {
   const v = response(id, i);
-  return scoreOK(v.a) && scoreOK(v.b);
+  return Object.hasOwn(choices, v.choice) || (scoreOK(v.a) && scoreOK(v.b));
 }
 function count(id) {
   return pairs[id].filter((_, i) => complete(id, i)).length;
@@ -97,7 +102,7 @@ function count(id) {
 function started(id) {
   return pairs[id].some((_, i) => {
     const v = response(id, i);
-    return scoreOK(v.a) || scoreOK(v.b) || !!v.note;
+    return complete(id, i) || scoreOK(v.a) || scoreOK(v.b) || !!v.note;
   });
 }
 function firstOpen(id) {
@@ -166,13 +171,13 @@ function catalog() {
     (t) => filter === "全部" || t.group === filter,
   );
   view.innerHTML =
-    '<section class="hero"><div class="hero-copy"><div class="hero-kicker"><i></i>个人风格指南生成器</div><h1>把偏好，<em>写成指南。</em></h1><p>比较文字与视觉样本，给喜欢的做法打分。<br>把你的选择整理成一份 AI 可以直接使用的风格指南。</p><a class="primary lime" href="' +
+    '<section class="hero"><div class="hero-copy"><div class="hero-kicker"><i></i>个人风格指南生成器</div><h1>把偏好，<em>写成指南。</em></h1><p>比较文字与视觉样本，选出更喜欢的做法。<br>把你的选择整理成一份 AI 可以直接使用的风格指南。</p><a class="primary lime" href="' +
     (heroTarget
       ? "#rate/" + heroTarget.id + "/" + (firstOpen(heroTarget.id) + 1)
       : "#guides") +
     '">' +
     (first
-      ? "继续评「" + first.title + "」"
+      ? "继续比较「" + first.title + "」"
       : heroTarget
         ? "从" + heroTarget.title + "开始"
         : "查看我的指南") +
@@ -197,40 +202,39 @@ function catalog() {
     filtered.map(catalogCard).join("") +
     "</div></section>";
 }
-function sampleCard(option, side, v, t) {
+function sampleCard(option, side, t) {
   const letter = side.toUpperCase();
-  return (
-    '<section class="sample"><div class="sample-head"><span class="letter">' +
-    letter +
-    "</span><h2>样本 " +
-    letter +
-    '</h2></div><div class="specimen ' +
-    (option.html ? "visual" : "written " + t.id) +
-    '">' +
-    (option.html || esc(option.text)) +
-    '</div><fieldset class="ratings"><legend>给样本 ' +
-    letter +
-    ' 打分</legend><div class="scale">' +
-    labels
+  return `<section class="sample">
+    <div class="sample-head"><span class="letter" aria-hidden="true">${letter}</span><h2>样本 ${letter}</h2></div>
+    <div class="specimen ${option.html ? "visual" : "written " + t.id}">${option.html || esc(option.text)}</div>
+  </section>`;
+}
+
+function choiceControls(t, i, v) {
+  const oldScores = ["a", "b"]
+    .filter((side) => scoreOK(v[side]))
+    .map((side) => side.toUpperCase() + " " + v[side] + "/4")
+    .join("，");
+  const prior = Object.hasOwn(choices, v.choice)
+    ? "上次选了「" + choices[v.choice] + "」"
+    : oldScores
+      ? "原评分：" + oldScores
+      : "";
+  return `<div class="choice-panel">
+    ${prior ? '<p class="prior">' + prior + "</p>" : ""}
+    <div class="choice-grid" role="group" aria-label="你更喜欢哪一个？">${Object.entries(
+      choices,
+    )
       .map(
-        (name, i) =>
-          '<label><input type="radio" name="rate-' +
-          side +
-          '" value="' +
-          (i + 1) +
-          '" data-side="' +
-          side +
-          '" ' +
-          (v[side] === i + 1 ? "checked" : "") +
-          "><span><b>" +
-          (i + 1) +
-          "</b><small>" +
-          name +
-          "</small></span></label>",
+        ([value, label]) =>
+          `<button type="button" class="${value === "a" || value === "b" ? "primary" : "secondary"}" data-choice="${value}" aria-pressed="${v.choice === value}">${label}</button>`,
       )
-      .join("") +
-    "</div></fieldset></section>"
-  );
+      .join("")}</div>
+    <details class="note"${v.note ? " open" : ""}><summary>补充理由（选填）</summary>
+      <input id="note" aria-label="选择的理由" maxlength="360" placeholder="哪处细节影响了你的选择？" value="${esc(v.note || "")}">
+    </details>
+    <div class="step-actions"><a class="back" href="${i ? "#rate/" + t.id + "/" + i : "#catalog"}">${i ? "‹ 上一组" : "‹ 返回目录"}</a></div>
+  </div>`;
 }
 function rating(t, i) {
   const q = pairs[t.id][i],
@@ -239,7 +243,7 @@ function rating(t, i) {
   view.innerHTML =
     '<a class="back" href="#catalog">‹ 样本目录</a><div class="workhead"><div class="eyebrow">' +
     esc(t.en) +
-    " / 样本评分</div><h1>" +
+    " / 样本对比</div><h1>" +
     t.title +
     '</h1></div><div class="track" aria-label="题目导航">' +
     pairs[t.id]
@@ -256,7 +260,7 @@ function rating(t, i) {
           '" aria-label="第 ' +
           (j + 1) +
           " 组，" +
-          (complete(t.id, j) ? "已评分" : "待评分") +
+          (complete(t.id, j) ? "已选择" : "待选择") +
           '" ' +
           (j === i ? 'aria-current="step"' : "") +
           ' class="' +
@@ -270,44 +274,60 @@ function rating(t, i) {
     String(total).padStart(2, "0") +
     "</div><h2>" +
     esc(q.brief) +
-    '</h2><p>分别给两个版本打分，可以给相同分数。</p></section><div class="pair">' +
-    sampleCard(q.a, "a", v, t) +
-    sampleCard(q.b, "b", v, t) +
-    '</div><label class="note"><span>为什么这样选？ <small>选填</small></span><input id="note" maxlength="360" placeholder="例如：我喜欢这个开头，读起来更自然。" value="' +
-    esc(v.note || "") +
-    '"></label><div class="step-actions"><a class="secondary" href="' +
-    (i ? "#rate/" + t.id + "/" + i : "#catalog") +
-    '">' +
-    (i ? "上一组" : "返回目录") +
-    '</a><div class="advance"><span id="rate-status" aria-live="polite"></span><button class="primary" id="next"></button></div></div>';
-  refreshStep(t, i);
-}
-function refreshStep(t, i) {
-  const done = complete(t.id, i),
-    n = count(t.id),
-    total = pairs[t.id].length;
-  const next = document.getElementById("next");
-  next.disabled = !done;
-  next.textContent =
-    i < total - 1 ? "下一组" : n === total ? "生成主题指南" : "继续未评样本";
-  const v = response(t.id, i);
-  document.getElementById("rate-status").textContent = done
-    ? "本组已评分"
-    : scoreOK(v.a)
-      ? "请给样本 B 打分"
-      : scoreOK(v.b)
-        ? "请给样本 A 打分"
-        : "请选择两项评分";
-  const current = document.querySelector(".track [aria-current]");
-  current.classList.toggle("done", done);
-  current.setAttribute(
-    "aria-label",
-    "第 " + (i + 1) + " 组，" + (done ? "已评分" : "待评分"),
-  );
-  counters();
+    '</h2><p>你更喜欢哪一个？点选后自动继续。</p></section><div class="pair">' +
+    sampleCard(q.a, "a", t) +
+    sampleCard(q.b, "b", t) +
+    "</div>" +
+    choiceControls(t, i, v);
 }
 const guideIntro =
-  "请在对应场景中参考我的评分。4 分表示很喜欢，3 分表示比较喜欢，2 分表示不太喜欢，1 分表示很不喜欢。优先采用高分做法，少用低分做法。遇到新场景或相互冲突的要求，请先给我两个具体样例确认。";
+  "请把这些选择用在相近的任务中。只选 A 或 B 表示在这次对比中更偏向它。遇到新场景，或你推测我可能喜欢另一种做法时，请给我两个具体样例确认。";
+function feedback(q, v) {
+  const sides = ["a", "b"];
+  if (Object.hasOwn(choices, v.choice)) {
+    const choice = v.choice;
+    if (choice === "b") sides.reverse();
+    const summary =
+      choice === "both"
+        ? `「${q.a.label}」和「${q.b.label}」都喜欢，可按场景选用。`
+        : choice === "neither"
+          ? "两个样本都不喜欢，请另给一种做法。"
+          : `本组优先「${q[choice].label}」。${q[choice].rule}`;
+    const samples = sides.map((side) => ({
+      option: q[side],
+      side,
+      badge:
+        choice === "both"
+          ? "喜欢"
+          : choice === "neither"
+            ? "不喜欢"
+            : choice === side
+              ? "首选"
+              : "对照",
+      positive: choice === "both" || choice === side,
+    }));
+    return { summary, samples };
+  }
+  // Keep the user's absolute 1–4 scores when reading earlier responses.
+  sides.sort((x, y) => v[y] - v[x]);
+  const [best, other] = sides;
+  const summary =
+    v[best] <= 2
+      ? "两个样本的分数都低，请另给一种做法。"
+      : v.a === v.b
+        ? `「${q.a.label}」和「${q.b.label}」都喜欢，可按场景选用。`
+        : `优先「${q[best].label}」。${q[best].rule}` +
+          (v[other] >= 3 ? `「${q[other].label}」也可接受。` : "");
+  return {
+    summary,
+    samples: sides.map((side) => ({
+      option: q[side],
+      side,
+      positive: v[side] >= 3,
+      badge: `原评分 ${v[side]}/4（${["很不喜欢", "不太喜欢", "比较喜欢", "很喜欢"][v[side] - 1]}）`,
+    })),
+  };
+}
 function guideText(t) {
   const lines = [
     "## " +
@@ -323,49 +343,19 @@ function guideText(t) {
   pairs[t.id].forEach((q, i) => {
     if (!complete(t.id, i)) return;
     const v = response(t.id, i);
-    const best = v.a >= v.b ? "a" : "b",
-      other = best === "a" ? "b" : "a";
-    let preference;
-    if (Math.max(v.a, v.b) <= 2)
-      preference = "两个样本都不合意，请提出第三种做法。";
-    else if (v.a === v.b)
-      preference =
-        "「" + q.a.label + "」和「" + q.b.label + "」都合意，可随场景选用。";
-    else
-      preference =
-        "优先「" +
-        q[best].label +
-        "」。" +
-        q[best].rule +
-        (v[other] >= 3 ? "「" + q[other].label + "」也可接受。" : "");
-    lines.push("- " + q.axis + "：" + preference);
+    lines.push("- " + q.axis + "：" + feedback(q, v).summary);
   });
-  lines.push("", "### 评分依据");
+  lines.push("", "### 选择依据");
   pairs[t.id].forEach((q, i) => {
     if (!complete(t.id, i)) return;
     const v = response(t.id, i);
     lines.push("", "#### " + q.axis, "任务：" + q.brief);
-    for (const side of ["a", "b"].sort((x, y) => v[y] - v[x])) {
-      const o = q[side],
-        score = v[side];
+    for (const { option, badge } of feedback(q, v).samples) {
       lines.push(
-        "- " +
-          (score >= 3 ? "可采用" : "少采用") +
-          "「" +
-          o.label +
-          "」（" +
-          score +
-          "/4）：" +
-          o.rule,
-        "  参考样本：" + o.text.replace(/\n/g, "\n  "),
+        `- ${badge} · ${option.label}：${option.rule}`,
+        "  参考样本：" + option.text.replace(/\n/g, "\n  "),
       );
     }
-    if (v.a === v.b)
-      lines.push(
-        v.a >= 3
-          ? "两种做法都喜欢，可以按任务选用。"
-          : "两种做法的分数都低，请另给一个方向。",
-      );
     if (v.note?.trim()) lines.push("我的补充：" + v.note.trim());
   });
   return lines.join("\n");
@@ -387,7 +377,7 @@ function guideList() {
       ? "已记录 " +
         total +
         " 组对比。你可以复制单个主题，也可以把所有已评主题合在一起。"
-      : "完成任意一组对比，这里就会出现你的评分、样例和给 AI 的指令。") +
+      : "完成任意一组对比，这里就会出现你的选择、样例和给 AI 的指令。") +
     "</p></div>" +
     (list.length
       ? '<div class="guide-toolbar"><h2>已评主题 <span class="count-tag">' +
@@ -430,19 +420,20 @@ function oneGuide(t) {
     n +
     " / " +
     total +
-    ' 组。复制内容包含具体做法、原始评分、样本和你的备注。</p></div><div class="guide-toolbar"><div class="action-inline"><button class="primary" data-copy="' +
+    ' 组。复制内容包含具体做法、选择依据、样本和你的备注。</p></div><div class="guide-toolbar"><div class="action-inline"><button class="primary" data-copy="' +
     t.id +
     '">复制给 AI</button><a class="secondary" href="#rate/' +
     t.id +
     "/" +
     (firstOpen(t.id) + 1) +
     '">' +
-    (n === total ? "重新查看评分" : "继续评分") +
+    (n === total ? "回顾选择" : "继续选择") +
     '</a></div></div><div class="result-list">' +
     pairs[t.id]
       .map((q, i) => {
         if (!complete(t.id, i)) return "";
         const v = response(t.id, i);
+        const result = feedback(q, v);
         return (
           '<section class="result"><div class="result-head"><h2>' +
           esc(q.axis) +
@@ -450,28 +441,18 @@ function oneGuide(t) {
           t.id +
           "/" +
           (i + 1) +
-          '">调整评分</a></div><p>' +
+          '">修改选择</a></div><p>' +
           esc(q.brief) +
           "</p>" +
-          ["a", "b"]
-            .sort((a, b) => v[b] - v[a])
+          '<p class="guide-summary">' +
+          esc(result.summary) +
+          "</p>" +
+          result.samples
             .map(
-              (s) =>
-                '<div class="rule"><b class="' +
-                (v[s] >= 3 ? "high" : "low") +
-                '">' +
-                v[s] +
-                " / 4</b><div><h3>" +
-                esc(q[s].label) +
-                "</h3><p>" +
-                (v[s] >= 3 ? "可采用" : "少采用") +
-                "的做法 · " +
-                esc(q[s].rule) +
-                "</p><details><summary>查看样本 " +
-                s.toUpperCase() +
-                "</summary><blockquote>" +
-                esc(q[s].text) +
-                "</blockquote></details></div></div>",
+              ({ option, side, badge, positive }) =>
+                `<div class="rule"><b class="${positive ? "high" : "low"}">${esc(badge)}</b>
+              <div><h3>${esc(option.label)}</h3><p>${esc(option.rule)}</p>
+              <details><summary>查看样本 ${side.toUpperCase()}</summary><blockquote>${esc(option.text)}</blockquote></details></div></div>`,
             )
             .join("") +
           (v.note?.trim()
@@ -562,22 +543,15 @@ view.addEventListener("click", (event) => {
     );
     return;
   }
-  if (button.id === "next") {
+  if (Object.hasOwn(choices, button.dataset.choice)) {
     const { t, i } = currentQuestion();
-    if (!complete(t.id, i)) return;
+    update(t.id, i, "choice", button.dataset.choice);
+    const next = pairs[t.id].findIndex((_, j) => j > i && !complete(t.id, j));
     location.hash =
-      i + 1 < pairs[t.id].length
-        ? "rate/" + t.id + "/" + (i + 2)
-        : count(t.id) === pairs[t.id].length
-          ? "guide/" + t.id
-          : "rate/" + t.id + "/" + (firstOpen(t.id) + 1);
+      count(t.id) === pairs[t.id].length
+        ? "guide/" + t.id
+        : "rate/" + t.id + "/" + ((next < 0 ? firstOpen(t.id) : next) + 1);
   }
-});
-view.addEventListener("change", (event) => {
-  if (!event.target.dataset.side) return;
-  const { t, i } = currentQuestion();
-  update(t.id, i, event.target.dataset.side, Number(event.target.value));
-  refreshStep(t, i);
 });
 view.addEventListener("input", (event) => {
   if (event.target.id === "note") {
