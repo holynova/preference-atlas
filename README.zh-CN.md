@@ -21,3 +21,5 @@
 ## 发布
 
 在 main 分支运行 `npm run check`。生产环境使用 `wrangler.jsonc` 声明的 Cloudflare Worker。登录对应账户后，执行 `npx wrangler@4.164.0 deploy` 即可部署已检查的提交。
+
+执行 `git push origin main` 后，Cloudflare Workers Builds 会运行 `npm run build`，并部署正式站。

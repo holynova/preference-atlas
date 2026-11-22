@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "private": true,
   "scripts": {
-    "check": "node --check dist/app.js && node --check dist/writing.js && node --check dist/visual.js && node --check dist/art.js"
+    "check": "node --check dist/app.js && node --check dist/writing.js && node --check dist/visual.js && node --check dist/art.js",
+    "build": "npm run check"
   }
 }

@@ -21,3 +21,5 @@ From the repository root, run `python3 -m http.server 8000 --directory dist` and
 ## Publish
 
 Run `npm run check` on the main branch. The production target is the Cloudflare Worker declared in `wrangler.jsonc`. With access to the configured account, deploy the checked commit using `npx wrangler@4.164.0 deploy`.
+
+Cloudflare Workers Builds runs `npm run build` and deploys the production Worker after `git push origin main`.
